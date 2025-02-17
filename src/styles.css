@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@font-face {
+  font-family: 'daily';
+  src: url('src/assets/daily.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.font-daily{
+    font-family: 'daily', sans-serif;
+}
+.bg-olive-button{
+    background-color: #677254;
+    &:hover{        
+    background-color: #515A47;   
+    }
+}
+.bg-olive-1{
+    background-color: #677254;    
+}
+.bg-olive-2{
+    background-color: #515A47;    
+}
+.bg-olive-3{
+    background-color: #394030;   
+}
+
+.text-olive-1{
+    color: #677254;    
+}
+.text-olive-2{
+    color: #515A47;
+}
+.text-olive-3{
+    color: #394030;
+}
+
+::-webkit-scrollbar {
+  width: 8px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #394030; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #677254; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #677254;
+  
+}
