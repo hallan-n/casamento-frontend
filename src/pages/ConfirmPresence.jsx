@@ -36,7 +36,7 @@ export default function ConfirmPresence() {
                 <img src="./src/assets/confirm.jpg" className='hidden md:block max-w-96 rounded-2xl' alt="" />
                 <form className='max-w-96' onSubmit={handleSubmit}>
                     <h1 className='text-4xl font-bold mb-7'>Confirmar presença no casamento</h1>
-                    <h2>Por favor, Preencha seus dados</h2>
+                    <h2>Verifique se seu nome está correto. Se não, preencha-o corretamente.</h2>
                     <input
                         name='name'
                         type="text"
