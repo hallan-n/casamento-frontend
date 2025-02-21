@@ -17,15 +17,15 @@ export default function ConfirmPresence() {
     useEffect(() => {
         const fetchGuestData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/${uuid}`);                
-                
+                const response = await fetch(`http://localhost:8000/${uuid}`);
+
                 if (!response.ok) throw new Error("Convidado não encontrado");
-                
+
                 const data = await response.json();
                 const children = Object.keys(data)
-                    .filter(key => key.startsWith("child_")) 
-                    .map(key => data[key]) 
-                    .filter(child => child.trim() !== ""); 
+                    .filter(key => key.startsWith("child_"))
+                    .map(key => data[key])
+                    .filter(child => child.trim() !== "");
 
                 setFormData({
                     name: data.name || "",
@@ -35,7 +35,7 @@ export default function ConfirmPresence() {
                 });
                 setInputs(data.children.length ? data.children.map(() => "") : [""]);
                 console.log(data);
-                
+
             } catch (error) {
                 console.error("Erro ao buscar convidado:", error);
             }
@@ -45,8 +45,10 @@ export default function ConfirmPresence() {
     }, [uuid]);
 
     const addInput = () => {
-        setInputs([...inputs, ""]);
-        setFormData({ ...formData, children: [...formData.children, ""] });
+        if (inputs.length < 10) {
+            setInputs([...inputs, ""]);
+            setFormData({ ...formData, children: [...formData.children, ""] });
+        }
     };
 
     const removeInput = (index) => {
@@ -127,7 +129,13 @@ export default function ConfirmPresence() {
                                         </button>
                                     </div>
                                 ))}
-                                <button type="button" onClick={addInput} className="cursor-pointer text-white bg-zinc-500 hover:bg-zinc-600 p-2 px-4 rounded-md flex items-center gap-2 justify-between">
+                                <button
+                                    type="button"
+                                    onClick={addInput}
+                                    disabled={inputs.length >= 10}
+                                    className={`cursor-pointer text-white p-2 px-4 rounded-md flex items-center gap-2 justify-between
+                                        ${inputs.length >= 10 ? "bg-gray-400 cursor-not-allowed" : "bg-zinc-500 hover:bg-zinc-600"}`}
+                                >
                                     <span className="material-symbols-outlined">add</span> <p>Adicionar</p>
                                 </button>
                             </div>
