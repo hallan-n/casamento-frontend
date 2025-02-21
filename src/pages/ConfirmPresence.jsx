@@ -1,14 +1,59 @@
 import Header from '../components/Header';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export default function ConfirmPresence() {
+    const { uuid } = useParams(); // Obtém o UUID da URL
     const [isOpen, setIsOpen] = useState(false);
     const [inputs, setInputs] = useState([""]);
-    const [formData, setFormData] = useState({ name: "", email: "", phone: "", children: [""] });
+    const [formData, setFormData] = useState(
+        {
+            name: "",
+            email: "",
+            phone: "",
+            children: [""]
+        });
+
+    useEffect(() => {
+        const fetchGuestData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8000/${uuid}`);                
+                
+                if (!response.ok) throw new Error("Convidado não encontrado");
+                
+                const data = await response.json();
+                const children = Object.keys(data)
+                    .filter(key => key.startsWith("child_")) 
+                    .map(key => data[key]) 
+                    .filter(child => child.trim() !== ""); 
+
+                setFormData({
+                    name: data.name || "",
+                    email: data.email || "",
+                    phone: data.phone || "",
+                    children,
+                });
+                setInputs(data.children.length ? data.children.map(() => "") : [""]);
+                console.log(data);
+                
+            } catch (error) {
+                console.error("Erro ao buscar convidado:", error);
+            }
+        };
+
+        if (uuid) fetchGuestData();
+    }, [uuid]);
 
     const addInput = () => {
         setInputs([...inputs, ""]);
         setFormData({ ...formData, children: [...formData.children, ""] });
+    };
+
+    const removeInput = (index) => {
+        const updatedInputs = inputs.filter((_, i) => i !== index);
+        const updatedChildren = formData.children.filter((_, i) => i !== index);
+        setInputs(updatedInputs);
+        setFormData({ ...formData, children: updatedChildren });
     };
 
     const handleChange = (e) => {
@@ -16,7 +61,6 @@ export default function ConfirmPresence() {
     };
 
     const handleChildChange = (index, value) => {
-
         const updatedChildren = [...formData.children];
         updatedChildren[index] = value;
         setFormData({ ...formData, children: updatedChildren });
@@ -24,7 +68,6 @@ export default function ConfirmPresence() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         console.log(JSON.stringify(formData));
     };
 
@@ -69,21 +112,23 @@ export default function ConfirmPresence() {
                             <p>Incluir filhos</p>
                         </button>
                         {isOpen && (
-                            <div className='flex gap-4 justify-between my-5 pb-5 mx-4'>
-                                <div>
-                                    {inputs.map((_, index) => (
+                            <div className='flex flex-col gap-4 justify-between my-5 pb-5 mx-4'>
+                                {inputs.map((_, index) => (
+                                    <div key={index} className='flex items-center gap-2'>
                                         <input
-                                            key={index}
-                                            name={`children-${index}`}
+                                            name={`child-${index}`}
                                             type="text"
                                             placeholder={`Nome do filho ${index + 1}`}
                                             value={formData.children[index]}
                                             onChange={(e) => handleChildChange(index, e.target.value)}
-                                            className="mt-2 w-full rounded-lg border border-gray-300 bg-white py-2 p-4 text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
-                                    ))}
-                                </div>
-                                <button type="button" onClick={addInput} className="self-end p-3 pb-2 bg-zinc-500 hover:bg-zinc-600 cursor-pointer rounded-full">
-                                    <span className="material-symbols-outlined m-0 p-0 text-white">add</span>
+                                            className="w-full rounded-lg border border-gray-300 bg-white py-2 p-4 text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                                        <button type="button" onClick={() => removeInput(index)} className="px-2 pt-2 pb-1 cursor-pointer rounded-md bg-zinc-500 hover:bg-zinc-600">
+                                            <span className="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
+                                ))}
+                                <button type="button" onClick={addInput} className="cursor-pointer text-white bg-zinc-500 hover:bg-zinc-600 p-2 px-4 rounded-md flex items-center gap-2 justify-between">
+                                    <span className="material-symbols-outlined">add</span> <p>Adicionar</p>
                                 </button>
                             </div>
                         )}

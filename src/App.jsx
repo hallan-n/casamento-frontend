@@ -8,7 +8,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/confirm-presence" element={<ConfirmPresence />} />
+        <Route path="/confirm-presence/:uuid" element={<ConfirmPresence />} />
       </Routes>
     </Router>
   );
