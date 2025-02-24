@@ -8,9 +8,11 @@ export default function ConfirmPresence() {
     const [inputs, setInputs] = useState([""]);
     const [formData, setFormData] = useState(
         {
+            id: "",
             name: "",
             email: "",
             phone: "",
+            is_confirmed: false,
             children: [""]
         });
 
@@ -20,21 +22,19 @@ export default function ConfirmPresence() {
                 const response = await fetch(`http://localhost:8000/${uuid}`);
 
                 if (!response.ok) throw new Error("Convidado não encontrado");
-
                 const data = await response.json();
                 const children = Object.keys(data)
-                    .filter(key => key.startsWith("child_"))
-                    .map(key => data[key])
-                    .filter(child => child.trim() !== "");
+                    .filter(key => key.startsWith("child_") && data[key].trim() !== "")
+                    .map(key => data[key]);
 
                 setFormData({
+                    id: data.id || "",
                     name: data.name || "",
                     email: data.email || "",
                     phone: data.phone || "",
-                    children,
+                    children: children, 
                 });
-                setInputs(data.children.length ? data.children.map(() => "") : [""]);
-                console.log(data);
+                setInputs(children.length ? children.map(() => "") : [""]);
 
             } catch (error) {
                 console.error("Erro ao buscar convidado:", error);
@@ -43,6 +43,7 @@ export default function ConfirmPresence() {
 
         if (uuid) fetchGuestData();
     }, [uuid]);
+
 
     const addInput = () => {
         if (inputs.length < 10) {
@@ -70,15 +71,46 @@ export default function ConfirmPresence() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(JSON.stringify(formData));
+
+        setFormData((prev) => {
+            const updatedFormData = { ...prev, is_confirmed: true };
+            return updatedFormData;
+        });        
     };
+
+    useEffect(() => {
+        if (formData.is_confirmed) {
+            
+            const transformed = {
+                id: formData.id,
+                name: formData.name,
+                id: formData.id,
+                phone: formData.phone,
+                email: formData.email,
+                is_confirmed: formData.is_confirmed,
+            };
+            
+            // Adiciona child_1 até child_10
+            for (let i = 1; i <= 10; i++) {
+                transformed[`child_${i}`] = formData.children[i - 1] || "";
+            }
+            
+            fetch("http://localhost:8000/", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(transformed),
+            }).catch(error => console.log(error))
+            
+            console.log("Enviando dados:", JSON.stringify(transformed));
+        }
+    }, [formData.is_confirmed]); 
 
     return (
         <div>
             <Header />
 
             <div className='flex gap-14 h-screen w-full justify-center items-center p-4'>
-                <img src="./src/assets/confirm.jpg" className='hidden md:block max-w-96 rounded-2xl' alt="" />
+                <img src="/src/assets/confirm.jpg" className='hidden md:block max-w-96 rounded-2xl' alt="" />
                 <form className='max-w-96' onSubmit={handleSubmit}>
                     <h1 className='text-4xl font-bold mb-7'>Confirmar presença no casamento</h1>
                     <h2>Verifique se seu nome está correto. Se não, preencha-o corretamente.</h2>

@@ -11,7 +11,7 @@ export default function Header() {
         <div className='sticky top-0 z-10'>
             <header className='bg-olive-3 p-4 flex'>
                 <div className='w-full max-w-6xl mx-auto flex justify-between items-center'>
-                    <img src="./src/assets/logo.svg" className='h-7' />
+                    <img src="/src/assets/logo.svg" className='h-7' />
                     <ul className='hidden md:flex text-white'>
                         <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/">Início</Link></li>
                         <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/confirm-presence">Confirmar presença</Link></li>
