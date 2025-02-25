@@ -13,6 +13,10 @@ export default function Header() {
                 <div className='w-full max-w-6xl mx-auto flex justify-between items-center'>
                     <img src="/src/assets/logo.svg" className='h-7' />
                     <ul className='hidden md:flex text-white'>
+                        <span className='flex justify-between me-8'>
+                            <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/admin-login">Administração</Link></li>
+                            <p className='px-4 text-zinc-300'>|</p>
+                        </span>
                         <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/">Início</Link></li>
                         <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/confirm-presence">Confirmar presença</Link></li>
                         <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/gift-list">Lista de presentes</Link></li>
@@ -31,6 +35,11 @@ export default function Header() {
                                     }`}
                             >
                                 <ul className="p-2 space-y-2">
+                                    <span >
+                                        <li className='p-2 hover:bg-gray-100 cursor-pointer'><Link to="/admin-login">Administração</Link></li>
+                                        <hr className='m-2 mt-3 border-zinc-400'/>
+
+                                    </span>
                                     <li className="p-2 hover:bg-gray-100 cursor-pointer">Início</li>
                                     <li className="p-2 hover:bg-gray-100 cursor-pointer">Confirmar presença</li>
                                     <li className="p-2 hover:bg-gray-100 cursor-pointer">Lista de presentes</li>

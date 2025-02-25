@@ -84,7 +84,6 @@ export default function ConfirmPresence() {
             const transformed = {
                 id: formData.id,
                 name: formData.name,
-                id: formData.id,
                 phone: formData.phone,
                 email: formData.email,
                 is_confirmed: formData.is_confirmed,
