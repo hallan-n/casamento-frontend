@@ -19,7 +19,13 @@ export default function AdminLogin() {
                         type="password"
                         placeholder="Senha"
                         className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
-              
+                    <div className='flex justify-between'>
+                        <div className='flex items-center gap-2'>
+                            <input type="checkbox" name="remember" id="remember" />
+                            <label className='text-zinc-500'  htmlFor="remember">Lembrar-me</label>
+                        </div>
+                        <a className='text-blue-700 font-bold' href="#">Esqueceu a senha?</a>
+                    </div>
                     <button type='submit' className='mt-1 cursor-pointer transition bg-olive-button p-2 rounded-md text-white w-full'>Entrar</button>
                 </form>
             </div>
