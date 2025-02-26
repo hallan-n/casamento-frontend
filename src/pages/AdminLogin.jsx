@@ -7,7 +7,7 @@ export default function AdminLogin() {
             <Header />
 
             <div className='h-screen w-full '>
-                <form className='max-w-96 flex flex-col gap-2 w-full mx-auto mt-26'>
+                <form className='max-w-96 flex flex-col gap-2 w-full mx-auto mt-26 p-4'>
                     <h1 className='text-2xl font-bold'>Painel de Administração</h1>
                     <input
                         name='login'
