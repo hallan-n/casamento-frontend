@@ -77,7 +77,7 @@ export default function GuestList() {
                                     <td className="p-4">{guest.email}</td>
                                     <td className="p-4">{guest.description}</td>
                                     <td className="p-4">
-                                        <Link to={`/admin-panel/edit-guest?id=${guest.id}`}>
+                                        <Link to={`/edit-guest?id=${guest.id}`}>
                                             <span className="material-symbols-outlined me-2 hover:text-zinc-400">edit</span>
                                         </Link>
                                         <Link to={`/admin-panel/confirm-delete-guest?id=${guest.id}`}>

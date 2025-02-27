@@ -89,7 +89,6 @@ export default function ConfirmPresence() {
                 is_confirmed: formData.is_confirmed,
             };
             
-            // Adiciona child_1 até child_10
             for (let i = 1; i <= 10; i++) {
                 transformed[`child_${i}`] = formData.children[i - 1] || "";
             }
@@ -98,9 +97,7 @@ export default function ConfirmPresence() {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(transformed),
-            }).catch(error => console.log(error))
-            
-            console.log("Enviando dados:", JSON.stringify(transformed));
+            }).catch(error => window.alert(`Erro ao enviar dados: ${error}`));
         }
     }, [formData.is_confirmed]); 
 
