@@ -4,6 +4,6 @@ Site destinado para o meu casamento.
 - Possui um sistema de lista de presentes
 
   Pendentes:
-  Integração da API da lista de presentes
-  Integração com a API de login
-  Privar as rotas de ADM
+  - Integração da API da lista de presentes
+  - Integração com a API de login
+  - Privar as rotas de ADM
