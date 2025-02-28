@@ -18,7 +18,6 @@ export default function Header() {
                             <p className='px-4 text-zinc-300'>|</p>
                         </span>
                         <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/">Início</Link></li>
-                        <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/confirm-presence">Confirmar presença</Link></li>
                         <li className='cursor-pointer px-2 hover:text-zinc-400 transition-all'><Link to="/gift-list">Lista de presentes</Link></li>
                     </ul>
                     <div className='flex md:hidden'>
@@ -41,7 +40,6 @@ export default function Header() {
 
                                     </span>
                                     <li className="p-2 hover:bg-gray-100 cursor-pointer">Início</li>
-                                    <li className="p-2 hover:bg-gray-100 cursor-pointer">Confirmar presença</li>
                                     <li className="p-2 hover:bg-gray-100 cursor-pointer">Lista de presentes</li>
                                 </ul>
                             </div>

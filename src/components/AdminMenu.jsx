@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function AdminMenu() {
     return (
-        <div className='flex gap-2'>
+        <div className='flex gap-2 mt-10'>
             <Link to="/add-guest">
             <buton className="flex justify-between gap-2 cursor-pointer hover:bg-zinc-200 transition p-2 px-4 border border-gray-300 rounded">
                 <p>Adicionar convidado</p>

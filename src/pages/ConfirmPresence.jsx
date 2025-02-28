@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function ConfirmPresence() {
-    const { uuid } = useParams(); // Obtém o UUID da URL
+    const navigate = useNavigate();
+    const { uuid } = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const [inputs, setInputs] = useState([""]);
     const [formData, setFormData] = useState(
@@ -32,7 +34,7 @@ export default function ConfirmPresence() {
                     name: data.name || "",
                     email: data.email || "",
                     phone: data.phone || "",
-                    children: children, 
+                    children: children,
                 });
                 setInputs(children.length ? children.map(() => "") : [""]);
 
@@ -75,12 +77,12 @@ export default function ConfirmPresence() {
         setFormData((prev) => {
             const updatedFormData = { ...prev, is_confirmed: true };
             return updatedFormData;
-        });        
+        });
     };
 
     useEffect(() => {
         if (formData.is_confirmed) {
-            
+
             const transformed = {
                 id: formData.id,
                 name: formData.name,
@@ -88,18 +90,22 @@ export default function ConfirmPresence() {
                 email: formData.email,
                 is_confirmed: formData.is_confirmed,
             };
-            
+
             for (let i = 1; i <= 10; i++) {
                 transformed[`child_${i}`] = formData.children[i - 1] || "";
             }
-            
+
             fetch("http://localhost:8000/", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(transformed),
-            }).catch(error => window.alert(`Erro ao enviar dados: ${error}`));
+            }).then((a) => {
+                window.alert("Presença confirmada com sucesso!");
+                navigate('/');
+            }).
+                catch(error => window.alert(`Erro ao enviar dados: ${error}`));
         }
-    }, [formData.is_confirmed]); 
+    }, [formData.is_confirmed]);
 
     return (
         <div>
