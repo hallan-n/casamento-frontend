@@ -23,11 +23,12 @@ export default function AdminLogin() {
 
             if (response.ok) {
                 localStorage.setItem('jwt', data.access_token);
-                alert('Login bem-sucedido!');
+                alert('Login realizado com sucesso!');
                 navigate('/guest-list');
             } else {
                 alert(data.message || 'Erro ao fazer login');
             }
+
         } catch (error) {
             console.error('Erro na requisição:', error);
             alert('Erro ao conectar com o servidor');
