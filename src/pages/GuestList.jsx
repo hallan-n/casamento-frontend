@@ -14,7 +14,13 @@ export default function GuestList() {
     useEffect(() => {
         const fetchConvidados = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/`)
+                const response = await fetch(`http://localhost:8000/admin`,
+                    {
+                        headers:{
+                            'token': localStorage.getItem('jwt')
+                        }
+                    }
+                )
                 const data = await response.json()
                 setConvidados(data)
             } catch (error) {
@@ -38,8 +44,11 @@ export default function GuestList() {
         }
 
         try {
-            const response = await fetch(`http://localhost:8000/?id=${id}`, {
+            const response = await fetch(`http://localhost:8000/admin?id=${id}`, {
                 method: "DELETE",
+                headers: {
+                    'token': localStorage.getItem('jwt')
+                }
             });
 
             if (!response.ok) {

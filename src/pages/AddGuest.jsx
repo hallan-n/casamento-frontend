@@ -21,9 +21,12 @@ export default function AddGuest() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8000/', {
+            const response = await fetch('http://localhost:8000/admin', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('jwt')
+                },
                 body: JSON.stringify(formData)
             });
 
