@@ -55,25 +55,25 @@ export default function GiftList() {
         <div>
             <Header />
             <div className="p-4 w-full max-w-6xl mx-auto">
-                <h1 className='text-2xl font-bold mb-5 mt-10'>Gerenciador de lista de convidados</h1>
+                <h1 className='text-2xl font-bold mb-5 mt-10'>Lista de presentes</h1>
                 <h2 className='font-bold mt-10'>Filtros</h2>
                 <hr className='border-zinc-200 mt-2 mb-5' />
 
-                <div className='flex gap-4'>
-                    <div>
+                <div className='flex flex-wrap gap-4 w-full'>
+                    <div className='w-full sm:w-auto'>
                         <p>Pesquisa por nome</p>
                         <input
                             type="text"
                             placeholder="Pesquisar nome"
-                            className="mb-4 p-2 border border-gray-300 rounded"
+                            className="mb-4 p-2 border border-gray-300 rounded w-full sm:w-64"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            />
+                        />
                     </div>
-                    <div>
+                    <div className='w-full sm:w-auto'>
                         <p>Preço: R$ {priceRange.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                         <input
-                            className="mb-4 p-2 border border-gray-300 rounded"
+                            className="mb-4 p-2 border border-gray-300 rounded w-full sm:w-64"
                             type="range"
                             min="0"
                             max="6000"
@@ -82,10 +82,10 @@ export default function GiftList() {
                             onChange={(e) => setPriceRange(Number(e.target.value))}
                         />
                     </div>
-                    <div>
+                    <div className='w-full sm:w-auto'>
                         <p>Disponível</p>
                         <select
-                            className="mb-4 p-2 border border-gray-300 rounded"
+                            className="mb-4 p-2 border border-gray-300 rounded w-full sm:w-64"
                             value={availability}
                             onChange={(e) => setAvailability(e.target.value)}
                         >
@@ -96,7 +96,8 @@ export default function GiftList() {
                     </div>
                 </div>
 
-                <div className='flex flex-wrap gap-4 justify-center max-w-5xl mx-auto'>
+
+                <div className='flex flex-wrap gap-4 justify-center max-w-5xl mx-auto mt-10'>
                     {
                         filteredGifts.map((gift, index) => (
                             <Gift key={index} thumb={gift.thumb} name={gift.name} description={gift.description} price={gift.price} />

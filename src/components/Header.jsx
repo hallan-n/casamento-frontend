@@ -41,8 +41,8 @@ export default function Header() {
                                         <hr className='m-2 mt-3 border-zinc-400'/>
 
                                     </span>
-                                    <li className="p-2 hover:bg-gray-100 cursor-pointer">Início</li>
-                                    <li className="p-2 hover:bg-gray-100 cursor-pointer">Lista de presentes</li>
+                                    <li className="p-2 hover:bg-gray-100 cursor-pointer"><Link to="/">Início</Link></li>
+                                    <li className="p-2 hover:bg-gray-100 cursor-pointer"><Link to="/gift-list">Lista de presentes</Link></li>
                                 </ul>
                             </div>
                         </div>
