@@ -99,11 +99,13 @@ export default function ConfirmPresence() {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(transformed),
-            }).then((a) => {
+            }).then(() => {
+                localStorage.setItem("guest", JSON.stringify(transformed));
                 window.alert("Presença confirmada com sucesso!");
                 navigate('/');
-            }).
-                catch(error => window.alert(`Erro ao enviar dados: ${error}`));
+            }).catch((error) => {
+                window.alert(`Erro ao enviar dados: ${error}`)
+            });
         }
     }, [formData.is_confirmed]);
 
