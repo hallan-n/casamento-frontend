@@ -11,25 +11,25 @@ export default function AdminEditGift() {
     const id = searchParams.get('id'); 
     const [formData, setFormData] = useState({
         id: '',
+        thumn: '',
         name: '',
-        email: '',
-        phone: '',
-        description: ''
+        description: '',
+        price: 0
     });
 
 
     useEffect(() => {
-        async function fetchGuest() {
+        async function fetchGift() {
             try {
-                const response = await fetch(`http://localhost:8000/guest/${id}`); 
-                if (!response.ok) throw new Error('Erro ao buscar convidado');
+                const response = await fetch(`http://localhost:8000/gift/${id}`); 
+                if (!response.ok) throw new Error('Erro ao buscar presente');
                 const data = await response.json();
                 setFormData(data);
             } catch (error) {
                 window.alert(error.message);
             }
         }
-        fetchGuest();
+        fetchGift();
     }, [id]);
 
     const handleChange = (e) => {
@@ -39,14 +39,14 @@ export default function AdminEditGift() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8000/guest`, {
+            const response = await fetch(`http://localhost:8000/gift`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
-            if (!response.ok) throw new Error('Erro ao atualizar convidado');
-            window.alert('Convidado atualizado com sucesso!');
-            navigate('/guest-list');
+            if (!response.ok) throw new Error('Erro ao atualizar presente');
+            window.alert('presente atualizado com sucesso!');
+            navigate('/gift-list');
         } catch (error) {
             window.alert(error.message);
         }
@@ -65,12 +65,14 @@ export default function AdminEditGift() {
                     <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-full mx-auto p-4'>
                         <p className='mb-5'>Informações do convidado(a)</p>
                         <div className='flex flex-col gap-5'>
-                            <input name='name' type="text" value={formData.name} onChange={handleChange} placeholder="Nome" className="px-4 py-2 w-full rounded-lg border" />
-                            <input name='email' type="email" value={formData.email} onChange={handleChange} placeholder="Email" className="px-4 py-2 w-full rounded-lg border" />
-                            <input name='phone' type="tel" value={formData.phone} onChange={handleChange} placeholder="Celular" className="px-4 py-2 w-full rounded-lg border" />
-                            <input name='description' type="text" value={formData.description} onChange={handleChange} placeholder="Informações adicionais" className="px-4 py-2 w-full rounded-lg border" />
+
+                            <input minLength={4} maxLength={250} name='thumb' type="url" placeholder="URL da Thumb" value={formData.thumb} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={100} name='name' type="text" placeholder="Nome" value={formData.name} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={100} name='description' type="text" placeholder="Descrição" value={formData.description} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input name='price' type="number" placeholder="Valor" value={formData.price} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+
                         </div>
-                        <button type='submit' className='cursor-pointer mt-6 bg-olive-button p-2 rounded-md text-white w-full'>Salvar</button>
+                        <button type='submit' className='mt-6 bg-olive-button p-2 rounded-md text-white w-full'>Salvar</button>
                     </form>
                 </div>
             </div>

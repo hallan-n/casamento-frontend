@@ -24,7 +24,7 @@ export default function AdminMenu() {
             </Link>
             <Link to="/add-gift" className='w-full md:w-auto'>
                 <buton className="flex justify-between gap-2 cursor-pointer hover:bg-zinc-200 transition p-2 px-4 border border-gray-300 rounded">
-                    <p className='text-nowrap'>Adicionar presebte</p>
+                    <p className='text-nowrap'>Adicionar presente</p>
                     <span className="material-symbols-outlined">add</span>
                 </buton>
             </Link>
