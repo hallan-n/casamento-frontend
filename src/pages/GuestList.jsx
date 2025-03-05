@@ -1,11 +1,10 @@
 import Header from '../components/Header';
 import AdminMenu from '../components/AdminMenu';
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-
-
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function GuestList() {
+    const navigate = useNavigate()
 
     const [searchTerm, setSearchTerm] = useState('')
     const [convidados, setConvidados] = useState([])
@@ -14,13 +13,19 @@ export default function GuestList() {
     useEffect(() => {
         const fetchConvidados = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/guest`,
-                    {
-                        headers:{
-                            'token': localStorage.getItem('jwt')
-                        }
+                const response = await fetch(`http://localhost:8000/guest`, {
+                    headers: {
+                        'token': localStorage.getItem('jwt')
                     }
-                )
+                })
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        navigate('/')
+                    }
+                    throw new Error('Erro ao buscar convidados')
+                }
+
                 const data = await response.json()
                 setConvidados(data)
             } catch (error) {
@@ -28,15 +33,13 @@ export default function GuestList() {
             }
         }
         fetchConvidados()
-    }, [])
+    }, [navigate]) 
 
     const filteredConvidados = convidados.filter(guest =>
         (guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             guest.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
             guest.email.toLowerCase().includes(searchTerm.toLowerCase())) &&
         (confirmed === null || guest.is_confirmed === confirmed))
-
-
 
     const deleteConvidado = async (id) => {
         if (!window.confirm("Tem certeza que deseja deletar este convidado?")) {
