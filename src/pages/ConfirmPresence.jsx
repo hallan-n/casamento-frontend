@@ -21,7 +21,7 @@ export default function ConfirmPresence() {
     useEffect(() => {
         const fetchGuestData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/${uuid}`);
+                const response = await fetch(`http://localhost:8000/guest/${uuid}`);
 
                 if (!response.ok) throw new Error("Convidado não encontrado");
                 const data = await response.json();
@@ -95,7 +95,7 @@ export default function ConfirmPresence() {
                 transformed[`child_${i}`] = formData.children[i - 1] || "";
             }
 
-            fetch("http://localhost:8000/", {
+            fetch("http://localhost:8000/guest", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(transformed),

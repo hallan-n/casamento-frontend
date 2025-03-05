@@ -21,7 +21,7 @@ export default function EditGuest() {
     useEffect(() => {
         async function fetchGuest() {
             try {
-                const response = await fetch(`http://localhost:8000/${id}`); 
+                const response = await fetch(`http://localhost:8000/guest/${id}`); 
                 if (!response.ok) throw new Error('Erro ao buscar convidado');
                 const data = await response.json();
                 setFormData(data);
@@ -39,7 +39,7 @@ export default function EditGuest() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8000/`, {
+            const response = await fetch(`http://localhost:8000/guest`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
