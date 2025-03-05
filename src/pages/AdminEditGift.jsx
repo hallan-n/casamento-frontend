@@ -10,8 +10,8 @@ export default function AdminEditGift() {
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id'); 
     const [formData, setFormData] = useState({
-        id: '',
-        thumn: '',
+        id: 0,
+        thumb: '',
         name: '',
         description: '',
         price: 0
@@ -41,7 +41,10 @@ export default function AdminEditGift() {
         try {
             const response = await fetch(`http://localhost:8000/gift`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('jwt')
+                },
                 body: JSON.stringify(formData),
             });
             if (!response.ok) throw new Error('Erro ao atualizar presente');

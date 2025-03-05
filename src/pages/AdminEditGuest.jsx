@@ -41,7 +41,10 @@ export default function AdminEditGift() {
         try {
             const response = await fetch(`http://localhost:8000/guest`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('jwt')
+                },
                 body: JSON.stringify(formData),
             });
             if (!response.ok) throw new Error('Erro ao atualizar convidado');

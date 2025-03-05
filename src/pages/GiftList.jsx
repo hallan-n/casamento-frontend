@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Gift from '../components/Gift'
 
@@ -6,44 +6,24 @@ export default function GiftList() {
     const [search, setSearch] = useState("")
     const [priceRange, setPriceRange] = useState(6000)
     const [availability, setAvailability] = useState("")
+    const [gifts, setGifts] = useState([]) // Estado para armazenar os presentes
 
-    const gifts = [
-        {
-            name: "Smartphone X",
-            description: "Tela AMOLED de 6.5 polegadas, câmera tripla e bateria de longa duração.",
-            price: 2499.90,
-            thumb: "https://a-static.mlcdn.com.br/1500x1500/celular-samsung-galaxy-a05s-128gb-6gb-ram-tela-infinita-de-6-7/samsung/5976/d373d4904ff731f8d1386b3155d41b6e.jpeg",
-            available: true
-        },
-        {
-            name: "Notebook Ultra",
-            description: "Processador Intel i7, 16GB RAM, SSD 512GB, ideal para trabalho e jogos.",
-            price: 5299.00,
-            thumb: "https://www.havan.com.br/media/catalog/product/cache/73a52df140c4d19dbec2b6c485ea6a50/n/o/notebook-positivo-intel-dual-core-4gb-ram-128gb-tela-de-15-6-w11_854366.webp",
-            available: false
-        },
-        {
-            name: "Fone Bluetooth Pro",
-            description: "Som imersivo, cancelamento de ruído ativo e bateria de 24 horas.",
-            price: 499.99,
-            thumb: "https://cdn.awsli.com.br/600x450/1919/1919257/produto/212487764/mme73-jqqyzmb9k5.jpg",
-            available: true
-        },
-        {
-            name: "Monitor 4K 27”",
-            description: "Resolução Ultra HD, taxa de atualização de 144Hz e tecnologia IPS.",
-            price: 1899.00,
-            thumb: "https://acerstore.vtexassets.com/arquivos/ids/164450/KG243Y-G0bi--1-.png?v=638634832656100000",
-            available: true
-        },
-        {
-            name: "Teclado Mecânico RGB",
-            description: "Switches mecânicos, iluminação personalizável e construção ergonômica.",
-            price: 349.90,
-            thumb: "https://images.kabum.com.br/produtos/fotos/472045/teclado-mecanico-gamer-kbm-gaming-tg600-preto-60-e-abnt2-rgb-switch-gateron-brown-kgtg600ptma_1713282993_gg.jpg",
-            available: false
+    // Função para buscar os presentes da API
+    const fetchGifts = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/gift') // Substitua pela URL da sua API
+            const data = await response.json()
+            if (data) console.log(data);
+            
+            setGifts(data) // Atualiza o estado com os dados recebidos
+        } catch (error) {
+            console.error('Erro ao buscar os presentes:', error)
         }
-    ]
+    }
+
+    useEffect(() => {
+        fetchGifts() // Chama a função quando o componente é montado
+    }, [])
 
     const filteredGifts = gifts.filter(gift =>
         gift.name.toLowerCase().includes(search.toLowerCase()) &&
@@ -96,11 +76,10 @@ export default function GiftList() {
                     </div>
                 </div>
 
-
                 <div className='flex flex-wrap gap-4 justify-center max-w-5xl mx-auto mt-10'>
                     {
-                        filteredGifts.map((gift, index) => (
-                            <Gift key={index} thumb={gift.thumb} name={gift.name} description={gift.description} price={gift.price} />
+                        filteredGifts.map((gift) => (
+                            <Gift key={gift.id} thumb={gift.thumb} name={gift.name} description={gift.description} price={gift.price} />
                         ))
                     }
                 </div>

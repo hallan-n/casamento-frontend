@@ -39,7 +39,7 @@ export default function AdminAddGift() {
                 },
                 body: JSON.stringify(formData)
             });
-
+            
             if (!response.ok) {
                 throw new Error('Erro ao adicionar presente');
             }
