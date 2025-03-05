@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AdminMenu from '../components/AdminMenu';
 import Header from '../components/Header';
 
-export default function AddGuest() {
+export default function AdminAddGuest() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',

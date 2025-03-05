@@ -3,7 +3,7 @@ import AdminMenu from '../components/AdminMenu';
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-export default function GuestList() {
+export default function AdminGuestList() {
     const navigate = useNavigate()
 
     const [searchTerm, setSearchTerm] = useState('')

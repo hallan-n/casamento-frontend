@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function EditGuest() {
+export default function AdminEditGuest() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id'); 
