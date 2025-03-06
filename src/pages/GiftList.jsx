@@ -5,17 +5,13 @@ import Gift from '../components/Gift'
 export default function GiftList() {
     const [search, setSearch] = useState("")
     const [priceRange, setPriceRange] = useState(6000)
-    const [available, setAvailable] = useState("") // Filtro de disponibilidade
     const [gifts, setGifts] = useState([])
     const [reservedGifts, setReservedGifts] = useState([]);
 
     useEffect(() => {
-        // Buscar os presentes disponíveis
         fetch("http://localhost:8000/gift")
             .then((res) => res.json())
             .then(setGifts)
-
-        // Buscar os presentes já reservados
         fetch("http://localhost:8000/give_gift")
             .then((res) => res.json())
             .then((data) => {

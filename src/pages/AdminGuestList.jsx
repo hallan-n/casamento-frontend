@@ -8,7 +8,6 @@ export default function AdminGuestList() {
 
     const [searchTerm, setSearchTerm] = useState('')
     const [convidados, setConvidados] = useState([])
-    const [confirmed, setConfirmed] = useState(null)
 
     useEffect(() => {
         const fetchConvidados = async () => {
@@ -19,7 +18,7 @@ export default function AdminGuestList() {
                     }
                 })
 
-                if (!response.ok) {
+                if (!response.ok) {u
                     if (response.status === 401) {
                         navigate('/')
                     }
@@ -38,8 +37,7 @@ export default function AdminGuestList() {
     const filteredConvidados = convidados.filter(guest =>
         (guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             guest.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            guest.email.toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (confirmed === null || guest.is_confirmed === confirmed))
+            guest.email.toLowerCase().includes(searchTerm.toLowerCase())))
 
     const deleteConvidado = async (id) => {
         if (!window.confirm("Tem certeza que deseja deletar este convidado?")) {
@@ -47,6 +45,13 @@ export default function AdminGuestList() {
         }
 
         try {
+            
+            await fetch(`http://localhost:8000/give_gift/guest?guest_id=${id}`, {
+                method: "DELETE",
+                headers: {
+                    'token': localStorage.getItem('jwt')
+                }
+            });
             const response = await fetch(`http://localhost:8000/guest?id=${id}`, {
                 method: "DELETE",
                 headers: {
@@ -84,14 +89,6 @@ export default function AdminGuestList() {
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="mb-4 p-2 border border-gray-300 rounded"
                             />
-                        </div>
-                        <div>
-                            <p>Confirmou presença</p>
-                            <select onChange={(e) => setConfirmed(e.target.value === "1" ? true : e.target.value === "0" ? false : null)} className="mb-4 p-2 border border-gray-300 rounded">
-                                <option value="" selected>Todos</option>
-                                <option value="1">Sim</option>
-                                <option value="0">Não</option>
-                            </select>
                         </div>
                     </div>
                     <div className="overflow-x-auto">
