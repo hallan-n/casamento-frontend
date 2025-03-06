@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
-
 import { Link } from "react-router-dom";
+import logo from '../assets/logo.svg';
 
 
 export default function Header() {
@@ -12,7 +11,7 @@ export default function Header() {
             <header className='bg-olive-3 p-4 flex'>
                 <div className='w-full max-w-6xl mx-auto flex justify-between items-center'>
                     <Link to="/">
-                        <img src="/src/assets/logo.svg" className='h-7' />
+                        <img src={logo} className='h-7' />
                     </Link>
                     <ul className='hidden md:flex text-white'>
                         <span className='flex justify-between me-8'>

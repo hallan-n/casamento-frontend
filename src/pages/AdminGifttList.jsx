@@ -2,6 +2,8 @@ import Header from '../components/Header';
 import AdminMenu from '../components/AdminMenu';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from "../config.js";
+
 
 export default function AdminGiftList() {
     const navigate = useNavigate();
@@ -9,14 +11,14 @@ export default function AdminGiftList() {
     const [searchTerm, setSearchTerm] = useState('');
     const [presentes, setPresentes] = useState([]);
     const [confirmed, setConfirmed] = useState(null);
-    const [giftsGiven, setGiftsGiven] = useState([]); // Para armazenar os IDs dos presentes dados
-    const [guests, setGuests] = useState([]); // Para armazenar os dados dos convidados
+    const [giftsGiven, setGiftsGiven] = useState([]);
+    const [guests, setGuests] = useState([]);
 
     useEffect(() => {
         // Buscar os presentes
         const fetchPresentes = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/gift`, {
+                const response = await fetch(`${API_URL}/gift`, {
                     headers: {
                         'token': localStorage.getItem('jwt'),
                     },
@@ -39,7 +41,7 @@ export default function AdminGiftList() {
         // Buscar os IDs dos presentes que foram dados
         const fetchGivenGifts = async () => {
             try {
-                const response = await fetch('http://localhost:8000/give_gift', {
+                const response = await fetch(`${API_URL}/give_gift`, {
                     headers: {
                         'token': localStorage.getItem('jwt'),
                     },
@@ -59,7 +61,7 @@ export default function AdminGiftList() {
         // Buscar os convidados
         const fetchGuests = async () => {
             try {
-                const response = await fetch('http://localhost:8000/guest', {
+                const response = await fetch('${API_URL}/guest', {
                     headers: {
                         'token': localStorage.getItem('jwt'),
                     },
@@ -88,7 +90,7 @@ export default function AdminGiftList() {
 
         try {
             try {
-                const response = await fetch(`http://localhost:8000/give_gift/gift?gift_id=${id}`, {
+                await fetch(`${API_URL}/give_gift/gift?gift_id=${id}`, {
                     method: 'DELETE',
                     headers: {
                         'token': localStorage.getItem('jwt'),
@@ -98,7 +100,7 @@ export default function AdminGiftList() {
                 console.log('Erro ao deletar o presente:', error)
             }
 
-            const response = await fetch(`http://localhost:8000/gift?id=${id}`, {
+            const response = await fetch(`${API_URL}/gift?id=${id}`, {
                 method: 'DELETE',
                 headers: {
                     'token': localStorage.getItem('jwt'),

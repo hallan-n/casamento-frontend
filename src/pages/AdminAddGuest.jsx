@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import AdminMenu from '../components/AdminMenu';
 import Header from '../components/Header';
+import addguest from '../assets/addguest.webp'
+import { API_URL } from "../config.js";
+
 
 export default function AdminAddGuest() {
     const [formData, setFormData] = useState({
@@ -21,7 +24,7 @@ export default function AdminAddGuest() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8000/guest', {
+            const response = await fetch(`${API_URL}/guest`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +33,7 @@ export default function AdminAddGuest() {
                 body: JSON.stringify(formData)
             });
 
-            if (!response.ok) {              
+            if (!response.ok) {
                 throw new Error('Erro ao adicionar convidado');
             }
 
@@ -50,7 +53,7 @@ export default function AdminAddGuest() {
                 <hr className='border-zinc-200 mt-2 mb-5' />
 
                 <div className='flex gap-5 mt-10'>
-                    <img src="/src/assets/addguest.webp" className='hidden md:block max-w-96 rounded-2xl' alt="" />
+                    <img src={addguest} className='hidden md:block max-w-96 rounded-2xl' alt="" />
                     <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-full mx-auto p-4'>
                         <p className='mb-5'>Informações do convidado(a)</p>
                         <div className='flex flex-col gap-5'>

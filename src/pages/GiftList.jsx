@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Gift from '../components/Gift'
+import { API_URL } from "../config.js";
+
 
 export default function GiftList() {
     const [search, setSearch] = useState("")
@@ -9,15 +11,16 @@ export default function GiftList() {
     const [reservedGifts, setReservedGifts] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/gift")
+        fetch(`${API_URL}/gift`)
             .then((res) => res.json())
-            .then(setGifts)
-        fetch("http://localhost:8000/give_gift")
-            .then((res) => res.json())
-            .then((data) => {
-                const reservedIds = data.map((gift) => gift.gift_id);
-                setReservedGifts(reservedIds);
-            })
+            .then(setGifts).then(() => {
+                fetch(`${API_URL}/give_gift`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        const reservedIds = data.map((gift) => gift.gift_id);
+                        setReservedGifts(reservedIds);
+                    })
+            });
     }, []);
 
     const filteredGifts = gifts.filter((gift) => {

@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { API_URL } from "../config.js";
+import confirm from '../assets/confirm.jpg';
 
 export default function ConfirmPresence() {
     const navigate = useNavigate();
@@ -21,7 +23,7 @@ export default function ConfirmPresence() {
     useEffect(() => {
         const fetchGuestData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/guest/${uuid}`);
+                const response = await fetch(`${API_URL}/guest/${uuid}`);
 
                 if (!response.ok) throw new Error("Convidado não encontrado");
                 const data = await response.json();
@@ -95,7 +97,7 @@ export default function ConfirmPresence() {
                 transformed[`child_${i}`] = formData.children[i - 1] || "";
             }
 
-            fetch("http://localhost:8000/guest", {
+            fetch(`${API_URL}/guest`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(transformed),
@@ -114,7 +116,7 @@ export default function ConfirmPresence() {
             <Header />
 
             <div className='flex gap-14 h-screen w-full justify-center items-center p-4'>
-                <img src="/src/assets/confirm.jpg" className='hidden md:block max-w-96 rounded-2xl' alt="" />
+                <img src={confirm} className='hidden md:block max-w-96 rounded-2xl' alt="" />
                 <form className='max-w-96' onSubmit={handleSubmit}>
                     <h1 className='text-4xl font-bold mb-7'>Confirmar presença no casamento</h1>
                     <h2>Verifique se seu nome está correto. Se não, preencha-o corretamente.</h2>
