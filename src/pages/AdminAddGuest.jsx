@@ -30,7 +30,7 @@ export default function AdminAddGuest() {
                 body: JSON.stringify(formData)
             });
 
-            if (!response.ok) {
+            if (!response.ok) {              
                 throw new Error('Erro ao adicionar convidado');
             }
 

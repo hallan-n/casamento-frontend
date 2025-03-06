@@ -5,31 +5,30 @@ import Gift from '../components/Gift'
 export default function GiftList() {
     const [search, setSearch] = useState("")
     const [priceRange, setPriceRange] = useState(6000)
-    const [availability, setAvailability] = useState("")
-    const [gifts, setGifts] = useState([]) // Estado para armazenar os presentes
-
-    // Função para buscar os presentes da API
-    const fetchGifts = async () => {
-        try {
-            const response = await fetch('http://localhost:8000/gift') // Substitua pela URL da sua API
-            const data = await response.json()
-            if (data) console.log(data);
-            
-            setGifts(data) // Atualiza o estado com os dados recebidos
-        } catch (error) {
-            console.error('Erro ao buscar os presentes:', error)
-        }
-    }
+    const [available, setAvailable] = useState("") // Filtro de disponibilidade
+    const [gifts, setGifts] = useState([])
+    const [reservedGifts, setReservedGifts] = useState([]);
 
     useEffect(() => {
-        fetchGifts() // Chama a função quando o componente é montado
-    }, [])
+        // Buscar os presentes disponíveis
+        fetch("http://localhost:8000/gift")
+            .then((res) => res.json())
+            .then(setGifts)
 
-    const filteredGifts = gifts.filter(gift =>
-        gift.name.toLowerCase().includes(search.toLowerCase()) &&
-        gift.price <= priceRange &&
-        (availability === "" || gift.available === (availability === "1"))
-    )
+        // Buscar os presentes já reservados
+        fetch("http://localhost:8000/give_gift")
+            .then((res) => res.json())
+            .then((data) => {
+                const reservedIds = data.map((gift) => gift.gift_id);
+                setReservedGifts(reservedIds);
+            })
+    }, []);
+
+    const filteredGifts = gifts.filter((gift) => {
+        const matchesSearch = gift.name.toLowerCase().includes(search.toLowerCase());
+        const matchesPrice = gift.price <= priceRange;
+        return matchesSearch && matchesPrice;
+    });
 
     return (
         <div>
@@ -62,24 +61,12 @@ export default function GiftList() {
                             onChange={(e) => setPriceRange(Number(e.target.value))}
                         />
                     </div>
-                    <div className='w-full sm:w-auto'>
-                        <p>Disponível</p>
-                        <select
-                            className="mb-4 p-2 border border-gray-300 rounded w-full sm:w-64"
-                            value={availability}
-                            onChange={(e) => setAvailability(e.target.value)}
-                        >
-                            <option value="">Todos</option>
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div className='flex flex-wrap gap-4 justify-center max-w-5xl mx-auto mt-10'>
                     {
                         filteredGifts.map((gift) => (
-                            <Gift key={gift.id} thumb={gift.thumb} name={gift.name} description={gift.description} price={gift.price} />
+                            <Gift key={gift.id} id={gift.id} thumb={gift.thumb} name={gift.name} description={gift.description} price={gift.price} isReserved={reservedGifts.includes(gift.id)} />
                         ))
                     }
                 </div>
