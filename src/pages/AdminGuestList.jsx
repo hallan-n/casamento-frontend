@@ -10,6 +10,8 @@ export default function AdminGuestList() {
 
     const [searchTerm, setSearchTerm] = useState('')
     const [convidados, setConvidados] = useState([])
+    const [confirmed, setConfirmed] = useState(null);
+    
 
     useEffect(() => {
         const fetchConvidados = async () => {
@@ -21,7 +23,7 @@ export default function AdminGuestList() {
                 })
 
                 if (!response.ok) {
-                    u
+                    
                     if (response.status === 401) {
                         navigate('/')
                     }
@@ -37,11 +39,15 @@ export default function AdminGuestList() {
         fetchConvidados()
     }, [navigate])
 
-    const filteredConvidados = convidados.filter(guest =>
-    (guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        guest.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        guest.email.toLowerCase().includes(searchTerm.toLowerCase())))
+    const filteredConvidados = convidados.filter((guest) => {
+        const matchesSearch = guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            guest.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            guest.email.toLowerCase().includes(searchTerm.toLowerCase());
 
+        const matchesConfirmed = confirmed === null || guest.is_confirmed === confirmed;
+
+        return matchesSearch && matchesConfirmed;
+    });
     const deleteConvidado = async (id) => {
         if (!window.confirm("Tem certeza que deseja deletar este convidado?")) {
             return;
@@ -92,6 +98,18 @@ export default function AdminGuestList() {
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="mb-4 p-2 border border-gray-300 rounded"
                         />
+                    </div>
+                    <div>
+                        <p>Confirmou presença</p>
+                        <select
+                            onChange={(e) => setConfirmed(e.target.value === '1' ? true : e.target.value === '0' ? false : null)}
+                            className="mb-4 p-2 border border-gray-300 rounded"
+                            value={confirmed === null ? '' : confirmed ? '1' : '0'}
+                        >
+                            <option value="">Todos</option>
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
                     </div>
                 </div>
                 <div className="overflow-x-auto">

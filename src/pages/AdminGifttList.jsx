@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from "../config.js";
 
-
 export default function AdminGiftList() {
     const navigate = useNavigate();
 
@@ -15,22 +14,15 @@ export default function AdminGiftList() {
     const [guests, setGuests] = useState([]);
 
     useEffect(() => {
-        // Buscar os presentes
         const fetchPresentes = async () => {
             try {
                 const response = await fetch(`${API_URL}/gift`, {
-                    headers: {
-                        'token': localStorage.getItem('jwt'),
-                    },
+                    headers: { 'token': localStorage.getItem('jwt') },
                 });
-
                 if (!response.ok) {
-                    if (response.status === 401) {
-                        navigate('/');
-                    }
+                    if (response.status === 401) navigate('/');
                     throw new Error('Erro ao buscar os presentes');
                 }
-
                 const data = await response.json();
                 setPresentes(data);
             } catch (error) {
@@ -38,39 +30,25 @@ export default function AdminGiftList() {
             }
         };
 
-        // Buscar os IDs dos presentes que foram dados
         const fetchGivenGifts = async () => {
             try {
                 const response = await fetch(`${API_URL}/give_gift`, {
-                    headers: {
-                        'token': localStorage.getItem('jwt'),
-                    },
+                    headers: { 'token': localStorage.getItem('jwt') },
                 });
-
-                if (!response.ok) {
-                    throw new Error('Erro ao buscar os presentes dados');
-                }
-
+                if (!response.ok) throw new Error('Erro ao buscar os presentes dados');
                 const data = await response.json();
-                setGiftsGiven(data); // Armazenar os dados completos de gifts_given (gift_id e guest_id)
+                setGiftsGiven(data);
             } catch (error) {
                 console.error('Erro ao buscar os presentes dados:', error);
             }
         };
 
-        // Buscar os convidados
         const fetchGuests = async () => {
             try {
-                const response = await fetch('${API_URL}/guest', {
-                    headers: {
-                        'token': localStorage.getItem('jwt'),
-                    },
+                const response = await fetch(`${API_URL}/guest`, {
+                    headers: { 'token': localStorage.getItem('jwt') },
                 });
-
-                if (!response.ok) {
-                    throw new Error('Erro ao buscar os convidados');
-                }
-
+                if (!response.ok) throw new Error('Erro ao buscar os convidados');
                 const data = await response.json();
                 setGuests(data);
             } catch (error) {
@@ -84,60 +62,33 @@ export default function AdminGiftList() {
     }, [navigate]);
 
     const deletePresente = async (id) => {
-        if (!window.confirm('Tem certeza que deseja deletar este presente?')) {
-            return;
-        }
-
+        if (!window.confirm('Tem certeza que deseja deletar este presente?')) return;
         try {
-            try {
-                await fetch(`${API_URL}/give_gift/gift?gift_id=${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'token': localStorage.getItem('jwt'),
-                    },
-                });
-            } catch (error) {
-                console.log('Erro ao deletar o presente:', error)
-            }
-
             const response = await fetch(`${API_URL}/gift?id=${id}`, {
                 method: 'DELETE',
-                headers: {
-                    'token': localStorage.getItem('jwt'),
-                },
+                headers: { 'token': localStorage.getItem('jwt') },
             });
-
-            if (!response.ok) {
-                throw new Error('Erro ao deletar o item');
-            }
-
+            if (!response.ok) throw new Error('Erro ao deletar o item');
             setPresentes(presentes.filter((gift) => gift.id !== id));
-
             alert('Presente deletado com sucesso!');
         } catch (error) {
             alert('Falha ao deletar o presente', error);
         }
     };
 
-    // Aplicar os filtros
     const filteredPresentes = presentes.filter((gift) => {
         const matchesSearch = gift.name.toLowerCase().includes(searchTerm.toLowerCase());
-
-        // Filtro para "Alguém deu?"
         const matchesGiven = confirmed === null
             ? true
-            : (confirmed === true ? giftsGiven.some(gift => gift.gift_id === gift.id) : !giftsGiven.some(gift => gift.gift_id === gift.id));
-
+            : (confirmed === true
+                ? giftsGiven.some(g => g.gift_id === gift.id)
+                : !giftsGiven.some(g => g.gift_id === gift.id));
         return matchesSearch && matchesGiven;
     });
 
-    // Função para pegar o nome do presenteador
     const getPresenteadorName = (giftId) => {
-        // Encontrar todos os dados de 'give_gift' para esse gift_id
-        const givenGift = giftsGiven.find(gift => gift.gift_id === giftId);
+        const givenGift = giftsGiven.find(g => g.gift_id === giftId);
         if (!givenGift) return 'Desconhecido';
-
-        // Procurar o convidado que deu o presente
         const guest = guests.find(guest => guest.id === givenGift.guest_id);
         return guest ? guest.name : 'Desconhecido';
     };
@@ -196,17 +147,13 @@ export default function AdminGiftList() {
                                     </td>
                                     <td className="p-4">{gift.name}</td>
                                     <td className="p-4">{gift.description}</td>
-                                    <td className="p-4">
-                                        R$ {gift.price != null ? gift.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) : '0,00'}
-                                    </td>
+                                    <td className="p-4">R$ {gift.price?.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) ?? '0,00'}</td>
                                     <td className="p-4">{getPresenteadorName(gift.id)}</td>
                                     <td className="p-4">
                                         <Link to={`/edit-gift?id=${gift.id}`}>
                                             <span className="material-symbols-outlined me-2 hover:text-zinc-400">edit</span>
                                         </Link>
-                                        <span className="cursor-pointer material-symbols-outlined hover:text-zinc-400" onClick={() => deletePresente(gift.id)}>
-                                            delete
-                                        </span>
+                                        <span className="cursor-pointer material-symbols-outlined hover:text-zinc-400" onClick={() => deletePresente(gift.id)}>delete</span>
                                     </td>
                                 </tr>
                             ))}

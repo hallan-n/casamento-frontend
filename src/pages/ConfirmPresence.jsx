@@ -36,6 +36,7 @@ export default function ConfirmPresence() {
                     name: data.name || "",
                     email: data.email || "",
                     phone: data.phone || "",
+                    description: data.description || "",
                     children: children,
                 });
                 setInputs(children.length ? children.map(() => "") : [""]);
@@ -90,6 +91,7 @@ export default function ConfirmPresence() {
                 name: formData.name,
                 phone: formData.phone,
                 email: formData.email,
+                description: formData.description,
                 is_confirmed: formData.is_confirmed,
             };
 
@@ -120,6 +122,11 @@ export default function ConfirmPresence() {
                 <form className='max-w-96' onSubmit={handleSubmit}>
                     <h1 className='text-4xl font-bold mb-7'>Confirmar presença no casamento</h1>
                     <h2>Verifique se seu nome está correto. Se não, preencha-o corretamente.</h2>
+                    <input
+                        name='description'
+                        type="hidden"
+                        value={formData.description}
+                        onChange={handleChange}/>
                     <input
                         name='name'
                         type="text"
