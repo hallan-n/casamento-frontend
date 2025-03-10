@@ -132,7 +132,7 @@ export default function AdminGiftList() {
                                 <th className="text-left p-4">ID</th>
                                 <th className="text-left p-4">Thumb</th>
                                 <th className="text-left p-4">Nome</th>
-                                <th className="text-left p-4">Descrição</th>
+                                <th className="text-left p-4">URL</th>
                                 <th className="text-left p-4">Preço</th>
                                 <th className="text-left p-4">Presenteador</th>
                                 <th className="text-left p-4">Ações</th>
@@ -146,7 +146,7 @@ export default function AdminGiftList() {
                                         <img className="h-20 hover:h-48 transition-all rounded-lg" src={gift.thumb} alt="" />
                                     </td>
                                     <td className="p-4">{gift.name}</td>
-                                    <td className="p-4">{gift.description}</td>
+                                    <td className="p-4"><a className=" text-blue-500 font-bold hover:text-blue-700 transition" href={gift.url} target="_blank" rel="noopener noreferrer">Visitar site do presente.</a></td>
                                     <td className="p-4">R$ {gift.price?.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) ?? '0,00'}</td>
                                     <td className="p-4">{getPresenteadorName(gift.id)}</td>
                                     <td className="p-4">

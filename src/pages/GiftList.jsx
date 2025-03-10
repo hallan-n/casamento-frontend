@@ -65,7 +65,7 @@ export default function GiftList() {
                 <div className='flex flex-wrap gap-4 justify-center max-w-5xl mx-auto mt-10'>
                     {
                         filteredGifts.map((gift) => (
-                            <Gift key={gift.id} id={gift.id} thumb={gift.thumb} name={gift.name} description={gift.description} price={gift.price} isReserved={reservedGifts.includes(gift.id)} />
+                            <Gift key={gift.id} id={gift.id} thumb={gift.thumb} name={gift.name} url={gift.url} price={gift.price} isReserved={reservedGifts.includes(gift.id)} />
                         ))
                     }
                 </div>

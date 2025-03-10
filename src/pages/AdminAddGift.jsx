@@ -8,7 +8,7 @@ export default function AdminAddGift() {
     const [formData, setFormData] = useState({
         thumb: '',
         name: '',
-        description: '',
+        url: '',
         price: 0,
     });
 
@@ -26,7 +26,7 @@ export default function AdminAddGift() {
         if (
             formData.thumb.length < 4 || formData.thumb.length > 250 ||
             formData.name.length < 4 || formData.name.length > 100 ||
-            formData.description.length < 4 || formData.description.length > 100
+            formData.url.length < 4 || formData.url.length > 100
         ) {
             alert("Todos os campos devem ter no mínimo 4 caracteres.");
             return;
@@ -47,7 +47,7 @@ export default function AdminAddGift() {
             }
 
             alert('Presente adicionado com sucesso!');
-            setFormData({ thumb: '', name: '', description: '', price: 0 });
+            setFormData({ thumb: '', name: '', url: '', price: 0 });
         } catch (error) {
             alert(error.message);
         }
@@ -66,9 +66,9 @@ export default function AdminAddGift() {
                     <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-full mx-auto p-4'>
                         <p className='mb-5'>Informações do presente</p>
                         <div className='flex flex-col gap-5'>
-                            <input minLength={4} maxLength={250} name='thumb' type="url" placeholder="URL da Thumb" value={formData.thumb} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
-                            <input minLength={4} maxLength={100} name='name' type="text" placeholder="Nome" value={formData.name} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
-                            <input minLength={4} maxLength={100} name='description' type="text" placeholder="Descrição" value={formData.description} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={255} name='thumb' type="url" placeholder="URL da Thumb" value={formData.thumb} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={255} name='name' type="text" placeholder="Nome" value={formData.name} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={255} name='url' type="url" placeholder="URL" value={formData.url} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
                             <input name='price' type="number" placeholder="Valor" value={formData.price} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
                         </div>
                         <button type='submit' className='mt-6 cursor-pointer transition bg-olive-button p-2 rounded-md text-white w-full'>Inserir</button>

@@ -15,7 +15,7 @@ export default function AdminEditGift() {
         id: 0,
         thumb: '',
         name: '',
-        description: '',
+        url: '',
         price: 0
     });
 
@@ -71,9 +71,9 @@ export default function AdminEditGift() {
                         <p className='mb-5'>Informações do convidado(a)</p>
                         <div className='flex flex-col gap-5'>
 
-                            <input minLength={4} maxLength={250} name='thumb' type="url" placeholder="URL da Thumb" value={formData.thumb} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
-                            <input minLength={4} maxLength={100} name='name' type="text" placeholder="Nome" value={formData.name} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
-                            <input minLength={4} maxLength={100} name='description' type="text" placeholder="Descrição" value={formData.description} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={255} name='thumb' type="url" placeholder="URL da Thumb" value={formData.thumb} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={255} name='name' type="text" placeholder="Nome" value={formData.name} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
+                            <input minLength={4} maxLength={255} name='url' type="url" placeholder="URL" value={formData.url} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
                             <input name='price' type="number" placeholder="Valor" value={formData.price} onChange={handleChange} className="px-4 py-2 w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2" />
 
                         </div>
