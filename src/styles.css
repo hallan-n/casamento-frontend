@@ -1,10 +1,26 @@
 @import "tailwindcss";
+
 @font-face {
   font-family: 'daily';
-  src: url('src/assets/daily.otf') format('otf');
+  src: url('/src/assets/daily.otf') format('truetype'); 
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'caviar';
+  src: url('/src/assets/CaviarDreams.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'caviar';
+  src: url('/src/assets/CaviarDreams_Bold.otf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 
 html, body {
   height: 100vh;
@@ -16,6 +32,9 @@ html, body {
 
 .font-daily{
     font-family: 'daily', sans-serif;
+}
+.font-caviar{
+    font-family: 'caviar', sans-serif;
 }
 .bg-olive-button{
     background-color: #677254;
