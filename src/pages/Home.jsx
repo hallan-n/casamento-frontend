@@ -11,7 +11,7 @@ export default function Home() {
       <main className="h-screen" style={{ background: "radial-gradient(circle, rgba(103, 114, 84), rgba(57, 64, 48))" }}>
         <img className='hidden lg:block absolute top-0 left-0 h-screen w-auto' src={casal} alt="Casal" />
         <div className='max-w-6xl mx-auto'>
-          <div className='flex justify-center lg:justify-end h-screen'>
+          <div className='flex justify-center lg:justify-end lg:h-screen'>
             <div className='text-white text-center flex flex-col justify-center items-center max-w-2xl p-4'>
               <img class="w-96" src={logo_full} alt="Casal" />
               <img class="w-96 my-8" src={divider} alt="Casal" />

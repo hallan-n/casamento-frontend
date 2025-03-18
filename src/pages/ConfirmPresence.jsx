@@ -114,7 +114,7 @@ export default function ConfirmPresence() {
     }, [formData.is_confirmed]);
 
     return (
-        <div>
+        <div className='overflow-y-auto h-screen'>
             <Header />
 
             <div className='flex gap-14 h-screen w-full justify-center items-center p-4'>
@@ -186,7 +186,7 @@ export default function ConfirmPresence() {
                             </div>
                         )}
                     </div>
-                    <button type='submit' className='mt-1 cursor-pointer transition bg-olive-button p-2 rounded-md text-white w-full'>Confirmar presença</button>
+                    <button type='submit' className='mt-1 cursor-pointer transition bg-olive-button p-2 rounded-md text-white w-full '>Confirmar presença</button>
                 </form>
             </div>
         </div>

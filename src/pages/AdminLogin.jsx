@@ -7,7 +7,6 @@ export default function AdminLogin() {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
