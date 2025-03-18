@@ -22,17 +22,18 @@ export default function GiftList() {
                     })
             });
     }, []);
-
+    
+    
     const filteredGifts = gifts.filter((gift) => {
         const matchesSearch = gift.name.toLowerCase().includes(search.toLowerCase());
         const matchesPrice = gift.price <= priceRange;
         return matchesSearch && matchesPrice;
     });
-
+    
     return (
-        <div>
+        <div className='overflow-y-auto h-screen'>
             <Header />
-            <div className="p-4 w-full max-w-6xl mx-auto">
+            <div className="p-4 w-full max-w-6xl mx-auto mb-20">
                 <h1 className='text-2xl font-bold mb-5 mt-10'>Lista de presentes</h1>
                 <h2 className='font-bold mt-10'>Filtros</h2>
                 <hr className='border-zinc-200 mt-2 mb-5' />

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import qrcode from '../assets/qrcode.png'
+import { API_URL } from "../config.js";
 
 export default function Gift({ thumb, name, url, price, isReserved, id }) {
+
     const [isOpen, setIsOpen] = useState(false);
     const handleCopy = () => {
         navigator.clipboard.writeText('00020126580014BR.GOV.BCB.PIX013603925632-85ab-4f9b-a880-958c96299e495204000053039865802BR5925Hallan Guilherme Santos d6009SAO PAULO61080540900062250521J9qnq2ExN7kT3XF17imhq63042D65');
@@ -19,12 +21,13 @@ export default function Gift({ thumb, name, url, price, isReserved, id }) {
                 return;
             }
 
-            const response = await fetch(`http://localhost:8000/give_gift?guest_id=${guest.id}&gift_id=${id}`, {
+            const response = await fetch(`${API_URL}/give_gift?guest_id=${guest.id}&gift_id=${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
+            
 
             if (!response.ok) {
                 throw new Error('Erro ao registrar presente');
@@ -33,7 +36,6 @@ export default function Gift({ thumb, name, url, price, isReserved, id }) {
             alert('Presente registrado com sucesso!');
             window.location.reload();
         } catch (error) {
-            console.error(error);
             alert('Erro ao registrar o presente.');
         }
     };
@@ -48,7 +50,7 @@ export default function Gift({ thumb, name, url, price, isReserved, id }) {
             if (!confirmGift) {
             }
 
-            const response = await fetch(`http://localhost:8000/give_gift?guest_id=${guest.id}&gift_id=${id}`, {
+            const response = await fetch(`${API_URL}/give_gift?guest_id=${guest.id}&gift_id=${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
