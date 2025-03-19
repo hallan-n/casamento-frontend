@@ -16,7 +16,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/confirm-presence/:uuid" element={<ConfirmPresence />} />
+        <Route path="/confirm-presence/:uuid?" element={<ConfirmPresence />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/gifts" element={<GiftList />} />
         <Route path="*" element={<Navigate to="/" />} />
